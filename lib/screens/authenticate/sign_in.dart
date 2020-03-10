@@ -88,8 +88,10 @@ class _SignInState extends State<SignIn> {
                     }
                   }*/
                   dynamic result = await _auth.signInWithEmailAndPassword(email, password);
-                  print(email);
-                  print(password);
+                  if (result == null) {
+                    print("error");
+                  }
+                  print(result);
                   }
                 },
               )  

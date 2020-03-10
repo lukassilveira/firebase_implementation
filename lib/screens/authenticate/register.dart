@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import '../../services/auth.dart';
-import '../../services/auth.dart';
 
-class SignIn extends StatefulWidget {
+class Register extends StatefulWidget {
 
   Function toggleView;
-  SignIn({this.toggleView});
+  Register({this.toggleView});
 
   @override
-  _SignInState createState() => _SignInState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
+class _RegisterState extends State<Register> {
 
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
@@ -25,15 +24,15 @@ class _SignInState extends State<SignIn> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Sign In',
+          'Register',
         ),
         backgroundColor: Colors.brown[400],
         actions: <Widget>[
           FlatButton.icon(
             onPressed: widget.toggleView, 
             icon: Icon(Icons.person), 
-            label: Text('Sign Up')
-          )
+            label: Text('Sign In')
+          ),
         ],
       ),
       backgroundColor: Colors.yellow[100],
@@ -54,12 +53,12 @@ class _SignInState extends State<SignIn> {
                 },
                 onChanged: (val) {
                   setState(() {
-                    email = val;
                   });
                 }
               ),
               SizedBox(height: 20,),
               TextFormField(
+                obscureText: true,
                 validator : (val) {
                   if (val.length < 3){
                     return "Passwords must have 4 characters";
@@ -67,29 +66,27 @@ class _SignInState extends State<SignIn> {
                     return null;
                   }
                 },
-                obscureText: true,
                 onChanged: (val) {
                   setState(() {
-                    password = val;
                   });
                 }
               ),
               SizedBox(height: 20,),
               RaisedButton(
-                child: Text('Sign in'),
+                child: Text('Sign up'),
                 color: Colors.pink,
                 onPressed: () async {
                   if (_formKey.currentState.validate()){
-                    /*dynamic result = await _auth.(email, password);
-                    if (result == null) {
+                    dynamic result = await _auth.registerWithEmailAndPassword(email, password);
+                    if (result== null) {
                       setState(() {
                         error = "Error registering";
                       });
                     }
-                  }*/
-                  dynamic result = await _auth.signInWithEmailAndPassword(email, password);
-                  print(email);
-                  print(password);
+                  }
+
+                  else {
+                    print('asd');
                   }
                 },
               )  

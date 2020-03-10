@@ -9,7 +9,8 @@ class Home extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text('Party'),
+        backgroundColor: Colors.brown[400],
         actions: <Widget>[
           FlatButton.icon(
             onPressed: () async {
@@ -20,6 +21,7 @@ class Home extends StatelessWidget {
           )
         ],
       ),
+      backgroundColor: Colors.yellow[100],
     );
   }
 }

@@ -1,5 +1,6 @@
+import 'package:firebase_implementation/shared/const.dart';
+import 'package:firebase_implementation/shared/loading.dart';
 import 'package:flutter/material.dart';
-import '../../services/auth.dart';
 import '../../services/auth.dart';
 
 class SignIn extends StatefulWidget {
@@ -20,9 +21,11 @@ class _SignInState extends State<SignIn> {
   String password = '';
   String error = '';
 
+  bool loading = false;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() : Scaffold(
       appBar: AppBar(
         title: Text(
           'Sign In',
@@ -45,9 +48,12 @@ class _SignInState extends State<SignIn> {
             children: <Widget>[
               SizedBox(height: 20,),
               TextFormField(
+                decoration: textInputDecoration.copyWith(labelText: "E-mail"),
                 validator: (val) {
                   if (val.isEmpty){
                     return "Enter an e-mail";
+                  } else if (!val.contains('@')) {
+                    return "Enter a valid e-mail";
                   } else {
                     return null;
                   }
@@ -60,9 +66,10 @@ class _SignInState extends State<SignIn> {
               ),
               SizedBox(height: 20,),
               TextFormField(
+                decoration: textInputDecoration.copyWith(labelText: 'Password'),
                 validator : (val) {
-                  if (val.length < 3){
-                    return "Passwords must have 4 characters";
+                  if (val.length < 5){
+                    return "Passwords must have 6 characters";
                   } else {
                     return null;
                   }
@@ -87,14 +94,23 @@ class _SignInState extends State<SignIn> {
                       });
                     }
                   }*/
-                  dynamic result = await _auth.signInWithEmailAndPassword(email, password);
-                  if (result == null) {
-                    print("error");
-                  }
-                  print(result);
+                    setState(() {
+                      loading = true;
+                    });
+                    dynamic result = await _auth.signInWithEmailAndPassword(email, password);
+                    if (result == null) {
+                      setState(() {
+                        loading = false;
+                        error = 'Failed loging in';
+                      });
+                      print("error");
+                    }
+                    print(result);
                   }
                 },
-              )  
+              ),
+              SizedBox(height: 20,),
+              Text(error, style: TextStyle(color: Colors.red),)  
             ],
           )
         )

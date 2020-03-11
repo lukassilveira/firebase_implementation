@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_implementation/models/character.dart';
 
 class DatabaseService {
 
@@ -15,6 +16,23 @@ class DatabaseService {
       'level': level,
       'health': health
     });
+  }
+
+  //character list
+  List<CharacterModel> _characterListFromSnapshot(QuerySnapshot snapshot){
+    return snapshot.documents.map((doc){
+      return CharacterModel(
+        className: doc.data['className'], 
+        name: doc.data['name'],
+        level: doc.data['level'],
+        health: doc.data['health']
+      );
+    }).toList();
+  }
+
+  //get party stream
+  Stream<List<CharacterModel>> get characters {
+    return characterCollection.snapshots().map(_characterListFromSnapshot);
   }
 
 }

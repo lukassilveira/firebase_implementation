@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_implementation/models/character.dart';
 import 'package:provider/provider.dart';
+import 'character_tile.dart';
 
 class CharacterList extends StatefulWidget {
   @override

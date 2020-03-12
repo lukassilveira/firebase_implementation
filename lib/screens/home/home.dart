@@ -1,4 +1,5 @@
 import 'package:firebase_implementation/models/character.dart';
+import 'package:firebase_implementation/screens/home/edit_form.dart';
 import 'package:flutter/material.dart';
 import '../../services/auth.dart';
 import 'package:firebase_implementation/services/database.dart';
@@ -10,6 +11,15 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final AuthService _auth = AuthService();
+
+    void _showEditPanel() {
+      showModalBottomSheet(context: context, builder: (context){
+        return Container(
+          padding: EdgeInsets.all(0), 
+          child: EditForm(),
+        );
+      });
+    }
 
     return StreamProvider<List<CharacterModel>>.value(
       value: DatabaseService().characters,
@@ -24,6 +34,11 @@ class Home extends StatelessWidget {
               },
               icon: Icon(Icons.person), 
               label: Text('Sign Out'),
+            ),
+            FlatButton.icon(
+              onPressed: () => _showEditPanel(),
+              icon: Icon(Icons.edit),
+              label: Text('Edit')
             )
           ],
         ),

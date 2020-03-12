@@ -9,10 +9,25 @@ class CharacterTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Padding(
       padding: EdgeInsets.only(top: 8),
-      child: Card(),
+      child: Card(
+        margin: EdgeInsets.fromLTRB(20, 4, 20, 4),
+        child: ListTile(
+          leading: Text(
+            character.health.toString(),
+            style: TextStyle(
+              fontSize: 30
+            ),
+          ),
+          title: Text(
+            character.name
+          ),
+          subtitle: Text(
+            character.className
+          ),
+        ),
+      ),
     );
   }
 }

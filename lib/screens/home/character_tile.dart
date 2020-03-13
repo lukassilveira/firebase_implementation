@@ -21,7 +21,7 @@ class CharacterTile extends StatelessWidget {
             ),
           ),
           title: Text(
-            character.name
+            character.name + " - Level " + character.level.toString()
           ),
           subtitle: Text(
             character.className

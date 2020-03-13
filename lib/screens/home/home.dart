@@ -13,9 +13,9 @@ class Home extends StatelessWidget {
     final AuthService _auth = AuthService();
 
     void _showEditPanel() {
-      showModalBottomSheet(context: context, builder: (context){
+      showModalBottomSheet(context: context, isScrollControlled: true, builder: (context){
         return Container(
-          padding: EdgeInsets.all(0), 
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: EditForm(),
         );
       });

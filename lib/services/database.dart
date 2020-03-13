@@ -35,4 +35,9 @@ class DatabaseService {
     return characterCollection.snapshots().map(_characterListFromSnapshot);
   }
 
+  //get user doc stream
+  Stream<DocumentSnapshot> get userData {
+    return characterCollection.document(uid).snapshots();
+  }
+
 }

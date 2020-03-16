@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_implementation/models/character.dart';
+import 'package:firebase_implementation/models/user.dart';
 
 class DatabaseService {
 
@@ -30,14 +31,25 @@ class DatabaseService {
     }).toList();
   }
 
+  UserData _userDataFromSnapshot(DocumentSnapshot documentSnapshot){
+    return UserData(
+      uid: documentSnapshot.data['uid'],
+      name: documentSnapshot.data['name'],
+      className: documentSnapshot.data['className'],
+      health: documentSnapshot.data['health'],
+      level: documentSnapshot.data['level'],
+    );
+  }
+
   //get party stream
   Stream<List<CharacterModel>> get characters {
     return characterCollection.snapshots().map(_characterListFromSnapshot);
   }
 
   //get user doc stream
-  Stream<DocumentSnapshot> get userData {
-    return characterCollection.document(uid).snapshots();
+  Stream<UserData> get userData {
+    return characterCollection.document(uid).snapshots()
+    .map(_userDataFromSnapshot);
   }
 
 }

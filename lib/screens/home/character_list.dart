@@ -12,7 +12,7 @@ class _CharacterListState extends State<CharacterList> {
   @override
   Widget build(BuildContext context) {
 
-    final characters = Provider.of<List<CharacterModel>>(context);
+    final characters = Provider.of<List<CharacterModel>>(context) ?? [];
 
     return ListView.builder(
       itemCount: characters.length,

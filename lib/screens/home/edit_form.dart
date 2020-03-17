@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_implementation/shared/const.dart';
 import 'package:provider/provider.dart';
 
+import '../../services/database.dart';
+import '../../shared/loading.dart';
+
 class EditForm extends StatefulWidget {
   @override
   _EditFormState createState() => _EditFormState();
@@ -58,6 +61,7 @@ class _EditFormState extends State<EditForm> {
                 ),
                 SizedBox(height: 20,),
                 TextFormField(
+                  initialValue: userData.className,
                   decoration: textInputDecoration.copyWith(labelText: 'Class'),
                   validator: (val) {
                     val.isEmpty ? 'Please insert a class' : null;
@@ -70,6 +74,7 @@ class _EditFormState extends State<EditForm> {
                 ),
                 SizedBox(height: 20,),
                 TextFormField(
+                  initialValue: userData.level.toString(),
                   decoration: textInputDecoration.copyWith(labelText: 'Level'),
                   keyboardType: TextInputType.number,
                   validator: (val) {
@@ -83,6 +88,7 @@ class _EditFormState extends State<EditForm> {
                 ),
                 SizedBox(height: 20,),
                 TextFormField(
+                  initialValue: userData.health.toString(),
                   decoration: textInputDecoration.copyWith(labelText: 'Health'),
                   keyboardType: TextInputType.number,
                   validator: (val) {
@@ -96,10 +102,13 @@ class _EditFormState extends State<EditForm> {
                 RaisedButton(
                   onPressed: () async {
                     if (_formKey.currentState.validate()){
-                      print(_currentName);
-                      print(_currentClassName);
-                      print(_currentHealth);
-                      print(_currentLevel);
+                      await DatabaseService(uid: user.userId).updateUserData(
+                        _currentName ?? userData.name,
+                        _currentClassName ?? userData.className,
+                        _currentLevel ?? userData.level,
+                        _currentHealth ?? userData.health
+                      );
+                      Navigator.pop(context);
                     }
                   },
                   child: Text('Submit'),
@@ -109,7 +118,7 @@ class _EditFormState extends State<EditForm> {
             ),
           );
         } else {
-
+          return Loading();
         }
 
         
